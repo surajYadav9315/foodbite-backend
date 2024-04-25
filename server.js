@@ -1,14 +1,21 @@
-import app from "./app.js";
+import app from './app.js';
+import { connectDB } from './database/db.js';
+import { configDotenv } from 'dotenv';
 
-app.get("/test", (req, res, next) => {
-    console.log("testing...");
-    return res.status(200).json({
-        "status": "success",
-        "message": "its working"
-    })
-})
+configDotenv()
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`server is running at post ${PORT}`);
-})
+const environment = process.env.NODE_ENV;
+
+
+
+try {
+    await connectDB();
+    app.listen(PORT, () => {
+        console.log(
+            `🚀 server is running at ${PORT} in ${environment} environment`
+        );
+    });
+} catch (err) {
+    console.log(err);
+}
