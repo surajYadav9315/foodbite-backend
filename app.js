@@ -3,7 +3,11 @@ import Express from 'express'
 const app = Express()
 
 app.get("/test", (req, res, next) => {
-    print("testing...");
+    console.log("testing...");
+    return res.status(200).json({
+        "status": "success",
+        "message": "its working"
+    })
 })
 
 app.listen(3000, () => {
